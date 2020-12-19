@@ -10,6 +10,7 @@ Aplicația se adresează studenților din cadrul învățământului de tip lice
 
 Aplicatii similare in piata: TeamMates (https://teammatesv4.appspot.com/web/front/home)
 
+
 Roluri: 
 
 Tîrîș Diana-Mihaela – responsabil de proces, programator
@@ -19,18 +20,20 @@ Truică Tudor-Alexandru - programator
 
 
 
-1.Design user interface
+1.Design user interface (vezi pdf)
 
-                     Vezi pdf
 
-	2. Identify components
+                  
+2. Identify components
 	
-	1. projects list
+1. projects list
 2. grade
 3. comment
 4. account
 5. projects details
 6. search team
+
+
 
 3.Identify API calls
 
@@ -60,6 +63,7 @@ GET studentProjects
 GET teamProjects/:teamId
 ----------------------
 GET teamProject/:teamId/project/:id
+
 
 4. Define user actions
  
