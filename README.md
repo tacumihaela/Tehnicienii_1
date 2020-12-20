@@ -8,7 +8,7 @@ Prin aplicatia pe care noi o propunem, utilizatorii isi pot incarca proiectele a
 
 Aplicația se adresează studenților din cadrul învățământului de tip licență sau cel de tip master ce își doresc îmbunătățirea performanțelor acestora, chiar cu ajutorul colegilor. Prin urmare, se concentrează pe o audiență atât feminină cât și masculină, unui segment de vârsta destul de larg, aparținând de Facultatea de Cibernetică, Statistică și Informatică Economică.
 
-Aplicatii similare in piata: TeamMates (https://teammatesv4.appspot.com/web/front/home)
+Aplicații similare pe piață: TeamMates (https://teammatesv4.appspot.com/web/front/home)
 
 
 ### Roluri: 
