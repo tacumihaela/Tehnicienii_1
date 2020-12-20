@@ -23,9 +23,9 @@ Aplicații similare pe piață: TeamMates (https://teammatesv4.appspot.com/web/f
 ## 1.Design user interface (vezi pdf)
 
 
-                  
+​                  
 ## 2. Identify components
-	
+
 1. projects list
 2. grade
 3. comment
@@ -37,32 +37,34 @@ Aplicații similare pe piață: TeamMates (https://teammatesv4.appspot.com/web/f
 
 ## 3.Identify API calls
 
- - GET accountDetails/:id
- - PUT accountDetails/:id
- - PUT changePassword/:id
- - PUT recoverPassword/:id
- - POST accountDetails
----------------------------
- - GET projectsList (best projects - from home page)
----------------------------
- - GET projectsForEvaluation/:id (the projects that I will evaluate)
-----------------------------
- - GET ourProjects/:teamId
- - POST ourProject
- - PUT ourProject/:projId
+- GET /api/reset
+
 ------------------------
- - GET grade
- - PUT grade/:id
+
+- POST /api/projects/
+
+- GET  /api/projects/
+
+- POST  /api/projects/add
+
+- POST  /api/projects/deliverables
+
+- GET /api/projects/deliverables
+
+- GET /api/projects/prof
+
+  
+
 ------------------------
- - POST comment
- - PUT comment/:id
- - DELETE comment/:id
--------------------------
- - GET studentProjects
+
+ - POST /api/login
+ - GET /api/logout
+ - POST /api/register/
+ - PUT /api/user/
+ - DELETE/api/user/
 ------------------------
- - GET teamProjects/:teamId
-----------------------
- - GET teamProject/:teamId/project/:id
+ - GET /api/grades
+ - PUT /api/grades
 
 
 
@@ -70,8 +72,8 @@ Aplicații similare pe piață: TeamMates (https://teammatesv4.appspot.com/web/f
 
 
 ## 4. Define user actions
- 
- 
+
+
 1. add,update, delete comments
 2. add, update grade
 3. submit, update project
