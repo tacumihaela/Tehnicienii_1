@@ -38,31 +38,31 @@ Truică Tudor-Alexandru - programator
 ## 3.Identify API calls
 
  - GET accountDetails/:id
-PUT accountDetails/:id
-PUT changePassword/:id
-PUT recoverPassword/:id
-POST accountDetails
+ - PUT accountDetails/:id
+ - PUT changePassword/:id
+ - PUT recoverPassword/:id
+ - POST accountDetails
 ---------------------------
-GET projectsList (best projects - from home page)
+ - GET projectsList (best projects - from home page)
 ---------------------------
-GET projectsForEvaluation/:id (the projects that I will evaluate)
+ - GET projectsForEvaluation/:id (the projects that I will evaluate)
 ----------------------------
-GET ourProjects/:teamId
-POST ourProject
-PUT ourProject/:projId
+ - GET ourProjects/:teamId
+ - POST ourProject
+ - PUT ourProject/:projId
 ------------------------
-GET grade
-PUT grade/:id
+ - GET grade
+ - PUT grade/:id
 ------------------------
-POST comment
-PUT comment/:id
-DELETE comment/:id
+ - POST comment
+ - PUT comment/:id
+ - DELETE comment/:id
 -------------------------
-GET studentProjects
+ - GET studentProjects
 ------------------------
-GET teamProjects/:teamId
+ - GET teamProjects/:teamId
 ----------------------
-GET teamProject/:teamId/project/:id
+ - GET teamProject/:teamId/project/:id
 
 
 
