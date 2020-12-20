@@ -37,7 +37,7 @@ Truică Tudor-Alexandru - programator
 
 ## 3.Identify API calls
 
-GET accountDetails/:id
+ - GET accountDetails/:id
 PUT accountDetails/:id
 PUT changePassword/:id
 PUT recoverPassword/:id
