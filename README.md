@@ -13,9 +13,9 @@ Aplicatii similare in piata: TeamMates (https://teammatesv4.appspot.com/web/fron
 
 ### Roluri: 
 
-Tîrîș Diana-Mihaela – responsabil de proces, programator
-Truică Tudor-Alexandru - programator
-Țacu Mihaela-Nicoleta– responsabil de produs, programator	
+ - Tîrîș Diana-Mihaela – responsabil de proces, programator
+ - Truică Tudor-Alexandru - programator
+ - Țacu Mihaela-Nicoleta– responsabil de produs, programator	
 
 
 
