@@ -1,4 +1,4 @@
-Introducere
+## Introducere
 
 Pentru ca produsul sau serviciul tău să ajungă acolo unde devine cu adevărat folositor, trebuie să înțelegi nevoile și dorințele utilizatorilor și să fii capabil să le rezolvi prin livrarea unui produs potrivit. Aplicația web dezvoltată își propune evaluarea proiectelor studenților prin acordarea notelor cu caracter anonim de către un juriu format din alți studenți. 
 
