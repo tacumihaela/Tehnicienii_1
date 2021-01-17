@@ -1,28 +1,37 @@
-const {
-  User,
-  Grade,
-  UserDeliverable,
-  Project,
-  Deliverable,
-} = require("../models");
+const { User, Grade, Project, Deliverable } = require("../models");
+const { Op } = require("sequelize");
+const { timeToEditDeliverable } = require("../../configuration").dev;
+
+const randomIntFromInterval = (min, max) => {
+  // min and max included
+  return Math.floor(Math.random() * (max - min + 1) + min);
+};
 
 const controller = {
   createProject: async (req, res) => {
     try {
       const { name, description } = req.body;
       const { id } = req.session;
-
-      const project = await Project.create({
-        name,
-        description,
-      });
-
       const user = await User.findOne({ where: { id } });
-      user.update({ ...user, project });
 
-      res.status(201).send({
-        message: `Project was sucessfull created`,
-      });
+      if (!user.projectId) {
+        const project = await Project.create({
+          name,
+          description,
+        });
+
+        user.update({ ...user, projectId: project.id });
+
+        res.status(201).send({
+          message: `Project was sucessfull created`,
+          project,
+        });
+      } else {
+        res.status(400).send({
+          message: `Already asigned to a project`,
+          project,
+        });
+      }
     } catch (e) {
       console.error(e);
       res.status(500).send({
@@ -32,7 +41,18 @@ const controller = {
   },
   getAll: async (req, res) => {
     try {
-      const projects = await Project.findALl({ raw: true });
+      const projectsRaw = await Project.findAll({ raw: true });
+
+      const projects = await Promise.all(
+        projectsRaw.map(async (project) => {
+          const users = await User.findAll({
+            attributes: ["firstName", "lastName", "email"],
+            where: { projectId: project.id },
+            raw: true,
+          });
+          return { ...project, users };
+        })
+      );
       res.status(200).send(projects);
     } catch (e) {
       console.error(e);
@@ -58,7 +78,7 @@ const controller = {
         });
       } else {
         const user = await User.findOne({ where: { id } });
-        user.update({ ...user, project });
+        user.update({ ...user, projectId: project.id });
         res.status(200).send({
           message: `You have been atached to the project`,
         });
@@ -70,9 +90,14 @@ const controller = {
       });
     }
   },
-  createDeliverable: async (req, res) => {
+
+  updateDeliverable: async (req, res) => {
     try {
-      const { projectId, source } = req.body;
+      let { projectId, source } = req.body;
+      const { id } = req.session;
+
+      const user = await User.findOne({ where: { id }, raw: true });
+      if (!projectId) projectId = user.projectId;
 
       const project = await Project.findOne({
         raw: true,
@@ -84,14 +109,52 @@ const controller = {
           message: "Project not found",
         });
       } else {
-        const deliverable = await Deliverable.create({
-          source,
-          projectId,
+        const found = await Deliverable.findOne({
+          where: {
+            projectId: project.id,
+            createdAt: {
+              [Op.gte]: new Date(
+                Date.now() - timeToEditDeliverable * 60 * 1000
+              ),
+            },
+          },
         });
+        if (!found) {
+          const deliverable = await Deliverable.create({
+            source,
+            projectId,
+          });
+          const users = await User.findAll({
+            attributes: ["id", "projectId", "type"],
+            raw: true,
+            where: {
+              projectId: { [Op.ne]: project.id },
+              type: "student",
+            },
+          });
+          await Promise.all(
+            users.map(async (item) => {
+              const n = randomIntFromInterval(1, 5);
 
-        res.status(201).send({
-          message: `Deliverable created`,
-        });
+              if (n == 4) {
+                await Grade.create({
+                  deliverableId: deliverable.id,
+                  userId: item.id,
+                  value: -1,
+                });
+              }
+            })
+          );
+
+          res.status(201).send({
+            message: `Deliverable created`,
+          });
+        } else {
+          await found.update({ ...found, source, projectId });
+          res.status(200).send({
+            message: `Deliverable updated`,
+          });
+        }
       }
     } catch (e) {
       console.error(e);
@@ -111,21 +174,13 @@ const controller = {
           message: `No project found`,
         });
       }
-      const deliverables = await Project.findALl({
+      const deliverables = await Deliverable.findAll({
         raw: true,
         where: { projectId: user.projectId },
+        order: [["createdAt", "DESC"]],
       });
 
       res.status(200).send(deliverables);
-    } catch (e) {
-      console.error(e);
-      res.status(500).send({
-        message: "Error",
-      });
-    }
-  },
-  getAllAsProf: async (req, res) => {
-    try {
     } catch (e) {
       console.error(e);
       res.status(500).send({

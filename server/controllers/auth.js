@@ -23,7 +23,15 @@ const controller = {
     const { email, password } = req.body;
 
     const user = await User.findOne({
-      attributes: ["id", "firstName", "lastName", "email", "token", "type"],
+      attributes: [
+        "id",
+        "firstName",
+        "lastName",
+        "email",
+        "token",
+        "type",
+        "projectId",
+      ],
       where: { email, password },
       raw: true,
     });
@@ -42,6 +50,7 @@ const controller = {
           lastName: user.lastName,
           email: user.email,
           type: user.type,
+          projectId: user.projectId,
         });
       }
     }

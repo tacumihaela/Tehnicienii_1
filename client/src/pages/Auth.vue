@@ -60,6 +60,14 @@
               />
             </template>
           </q-input>
+          <q-select
+            filled
+            v-model="register.type"
+            option-value="id"
+            option-label="desc"
+            :options="userTypes"
+            label="Type"
+          />
         </q-card-section>
       </div>
       <q-card-actions class="bg-white text-primary flex flex-center">
@@ -95,18 +103,31 @@ export default {
       lastName: "",
       accessCode: "",
       email: "",
-
+      userTypes: [
+        {
+          id: "student",
+          desc: "Student",
+        },
+        {
+          id: "professor",
+          desc: "Professor",
+        },
+      ],
       login: {
         email: "",
-        password: ""
+        password: "",
       },
       register: {
         firstName: "",
         lastName: "",
         email: "",
-        password: ""
+        password: "",
+        type: {
+          id: "student",
+          desc: "Student",
+        },
       },
-      isRegister: false
+      isRegister: false,
     };
   },
   beforeMount() {
@@ -119,20 +140,20 @@ export default {
       this.$axios
         .post("/api/login", {
           email: this.login.email,
-          password: this.login.password
+          password: this.login.password,
         })
-        .then(response => {
+        .then((response) => {
           this.$q.notify({
             color: "primary",
-            message: "login successful"
+            message: "login successful",
           });
           this.$q.localStorage.set("user", response.data);
           this.$router.push("/");
         })
-        .catch(error => {
+        .catch((error) => {
           this.$q.notify({
             color: "negative",
-            message: error.response.data.message
+            message: error.response.data.message,
           });
         });
     },
@@ -142,23 +163,24 @@ export default {
           email: this.register.email,
           password: this.register.password,
           firstName: this.register.firstName,
-          lastName: this.register.lastName
+          lastName: this.register.lastName,
+          type: this.register.type.id,
         })
-        .then(response => {
+        .then((response) => {
           this.$q.notify({
             color: "primary",
-            message: response.data.message
+            message: response.data.message,
           });
 
           this.isRegister = false;
         })
-        .catch(error => {
+        .catch((error) => {
           switch (error.response.status) {
             case 400: {
-              error.response.data.errors.forEach(element => {
+              error.response.data.errors.forEach((element) => {
                 this.$q.notify({
                   color: "negative",
-                  message: element
+                  message: element,
                 });
               });
               break;
@@ -166,12 +188,12 @@ export default {
             default: {
               this.$q.notify({
                 color: "negative",
-                message: error.response.data.message
+                message: error.response.data.message,
               });
             }
           }
         });
-    }
-  }
+    },
+  },
 };
 </script>

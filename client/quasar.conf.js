@@ -62,7 +62,7 @@ module.exports = function(ctx) {
       gzip: true,
       analyze: true,
       extractCSS: false,
-      extendWebpack(cfg) {
+      // extendWebpack(cfg) {
         // cfg.module.rules.push({
         //   enforce: 'pre',
         //   test: /\.(js|vue)$/,
@@ -72,7 +72,7 @@ module.exports = function(ctx) {
         //     formatter: require('eslint').CLIEngine.getFormatter('stylish')
         //   }
         // })
-      }
+      // }
     },
     devServer: {
       // https: true,

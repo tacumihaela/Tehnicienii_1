@@ -7,6 +7,8 @@
       "dialect": "mysql"
     },
     "port": 8081,
-    "sessionKey": "eg[isfd-8yF9-7w2315dfergergpok123+Ijsli;;termgerdfkhmdkrherhhehwemgro8"
+    "sessionKey": "eg[isfd-8yF9-7w2315dfergergpok123+Ijsli;;termgerdfkhmdkrherhhehwemgro8",
+    "timeToGrade": 30,
+    "timeToEditDeliverable":30
   }
 }
