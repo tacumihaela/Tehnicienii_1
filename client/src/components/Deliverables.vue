@@ -19,6 +19,7 @@
     >
       <template v-slot:top="props">
         <div class="col text-h6">Deliverables</div>
+        <p class="col">Total grade: {{ totalGrade }}</p>
         <div class="col">
           <p v-if="isEdit">Time left for the last deliverable: {{ counter }}</p>
         </div>
@@ -82,6 +83,7 @@ export default {
   name: "Deliverables",
   data() {
     return {
+      totalGrade: "N/A",
       interval: {},
       user: {},
       source: "",
@@ -119,8 +121,16 @@ export default {
           field: "createdAt",
           format: (val) => {
             const bool = Date.now() - Date.parse(val) < 30 * 60 * 1000;
-            return `${bool ? "Editable" : "Idle"}`;
+            return `${bool ? "Active" : "Expired"}`;
           },
+          sortable: true,
+        },
+        {
+          name: "total",
+          label: "Grade",
+          align: "left",
+          field: "total",
+          format: (val) => (val != -1 ? val : "N/A"),
           sortable: true,
         },
         {
@@ -138,6 +148,9 @@ export default {
     } else {
       this.$store.dispatch("data/loadProjects");
       this.$store.dispatch("data/loadDeliverables");
+      this.$axios.get("/api/grades/total").then((response) => {
+        this.totalGrade = response.data.total;
+      });
     }
   },
   created() {
@@ -160,7 +173,7 @@ export default {
           });
 
           this.card = false;
-
+          this.interval = setInterval(() => this.countDown(), 1000);
           this.$store.dispatch("data/loadGrades");
           this.$store.dispatch("data/loadDeliverables");
         })

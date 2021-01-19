@@ -48,6 +48,7 @@ const controller = {
           const users = await User.findAll({
             attributes: ["firstName", "lastName", "email"],
             where: { projectId: project.id },
+            order: [["createdAt", "DESC"]],
             raw: true,
           });
           return { ...project, users };
@@ -174,11 +175,51 @@ const controller = {
           message: `No project found`,
         });
       }
-      const deliverables = await Deliverable.findAll({
+
+      const deliverableRaw = await Deliverable.findAll({
         raw: true,
         where: { projectId: user.projectId },
         order: [["createdAt", "DESC"]],
       });
+
+      const deliverables = await Promise.all(
+        deliverableRaw.map(async (deliverable) => {
+          const gradesRaw = await Grade.findAll({
+            where: { deliverableId: deliverable.id },
+            raw: true,
+          });
+          const grades = gradesRaw
+            .filter((item) => item.value != -1)
+            .map(
+              (item) => Math.round((item.value + Number.EPSILON) * 100) / 100
+            );
+
+          let total;
+          if (grades.length == 0) {
+            total = -1;
+          } else if (grades.length < 3) {
+            total =
+              grades.reduce(
+                (accumulator, currentValue) => accumulator + currentValue,
+                0
+              ) / grades.length;
+          } else {
+            const min = Math.min(...grades);
+            const max = Math.max(...grades);
+            const over = grades.reduce(
+              (accumulator, currentValue) => accumulator + currentValue,
+              0
+            );
+            total = (over - min - max) / (grades.length - 2);
+          }
+
+          return {
+            ...deliverable,
+            grades,
+            total: Math.round((total + Number.EPSILON) * 100) / 100,
+          };
+        })
+      );
 
       res.status(200).send(deliverables);
     } catch (e) {

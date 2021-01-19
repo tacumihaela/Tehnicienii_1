@@ -19,7 +19,6 @@
 
     <div class="q-pa-md">
       <q-table
-        :loading="loading"
         title="Activities"
         :data="projects"
         :columns="columns"
@@ -51,7 +50,7 @@
         </template>
       </q-table>
       <q-dialog ref="dialog" @hide="onDialogHide">
-        <q-card class="q-dialog-plugin">
+        <q-card class="q-dialog-plugin" style="width: 700px; max-width: 80vw">
           <q-table
             title="Students"
             :data="selected.users"
@@ -316,7 +315,7 @@ export default {
         ? this.selected.users
             .map((item) => item.firstName + " " + item.lastName)
             .join(", ")
-        : "";
+        : "None";
     },
   },
 };

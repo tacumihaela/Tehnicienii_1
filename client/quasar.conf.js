@@ -61,23 +61,23 @@ module.exports = function(ctx) {
       vueCompiler: true,
       gzip: true,
       analyze: true,
-      extractCSS: false,
+      extractCSS: false
       // extendWebpack(cfg) {
-        // cfg.module.rules.push({
-        //   enforce: 'pre',
-        //   test: /\.(js|vue)$/,
-        //   loader: 'eslint-loader',
-        //   exclude: /node_modules/,
-        //   options: {
-        //     formatter: require('eslint').CLIEngine.getFormatter('stylish')
-        //   }
-        // })
+      // cfg.module.rules.push({
+      //   enforce: 'pre',
+      //   test: /\.(js|vue)$/,
+      //   loader: 'eslint-loader',
+      //   exclude: /node_modules/,
+      //   options: {
+      //     formatter: require('eslint').CLIEngine.getFormatter('stylish')
+      //   }
+      // })
       // }
     },
     devServer: {
       // https: true,
       port: 8080,
-      before: require("../server/server"),
+      // before: require("../server/server"),
       open: true // opens browser window automatically
     },
 

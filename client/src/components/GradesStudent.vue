@@ -43,7 +43,7 @@
                 buttons
                 v-if="props.row.status != 'EXPIRED'"
                 @before-show="setGrade(props.row.grade)"
-                @hide="saveGrade(props.row.id)"
+                @hide="saveGrade(props.row.deliverableId)"
               >
                 <q-input type="number" v-model="grade" filled autofocus />
               </q-popup-edit>
@@ -61,7 +61,20 @@
           <q-tr v-show="props.expand" :props="props">
             <q-td colspan="100%">
               <div class="text-left">
-                Description: {{ props.row.project.description }}
+                <p>
+                  Description: <b>{{ props.row.project.description }}</b>
+                </p>
+                <p>
+                  Team members:<b>
+                    {{
+                      props.row.project.users
+                        ? props.row.project.users
+                            .map((item) => item.firstName + " " + item.lastName)
+                            .join(", ")
+                        : "None"
+                    }}</b
+                  >
+                </p>
               </div>
             </q-td>
           </q-tr>
